@@ -103,11 +103,11 @@ http
       req.url.startsWith("/api/students?id=")
     ) {
       try {
-        console.log("I am here to delete");
+        // console.log("I am here to delete");
         const url = new URL(req.url, `http://${req.headers.host}`);
         const id = url.searchParams.get("id");
 
-        console.log("id");
+        // console.log("id");
         await studentCollection.deleteOne({ Id: id });
 
         res.writeHead(200, {
