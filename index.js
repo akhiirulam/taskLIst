@@ -53,17 +53,22 @@ http
         }
       });
     } else if (req.url === "/api/students" && req.method === "GET") {
-      const dataFetched = await studentCollection.find().toArray();
+      try {
+        const dataFetched = await studentCollection.find().toArray();
 
-      res.end(JSON.stringify(dataFetched));
+        res.end(JSON.stringify(dataFetched));
 
-      res.writeHead(200, { "content-type": "application/json" });
-      res.end("Student details fetched successfully");
+        res.writeHead(200, { "content-type": "application/json" });
+        res.end("Student details fetched successfully");
+      } catch (error) {
+        res.writeHead(500, { "content-type": "application/json" });
+        res.end("Student details not fetched successfully");
+      }
     } else if (
       req.method === "PUT" &&
       req.url.startsWith("/api/students?id=")
     ) {
-      //   console.log("I ame here");
+      //   console.log("I ame here for update");
       let body = "";
 
       req.on("data", (chunk) => {
@@ -93,6 +98,26 @@ http
           res.end("Student Not updated successfully");
         }
       });
+    } else if (
+      req.method === "DELETE" &&
+      req.url.startsWith("/api/students?id=")
+    ) {
+      try {
+        console.log("I am here to delete");
+        const url = new URL(req.url, `http://${req.headers.host}`);
+        const id = url.searchParams.get("id");
+
+        console.log("id");
+        await studentCollection.deleteOne({ Id: id });
+
+        res.writeHead(200, {
+          "Content-Type": "application/json",
+        });
+        res.end("Student details deleted successfully");
+      } catch (error) {
+        res.writeHead(500, { "content-type": "application/json" });
+        res.end("Student Not deleted successfully");
+      }
     }
   })
   .listen(3000, async () => {
