@@ -1,5 +1,5 @@
 import express from "express";
-import { fileUpload } from "../controller/fileUpload.controller.js";
+import { fileUpload, viewData } from "../controller/fileUpload.controller.js";
 import { upload } from "../middleware/multer.middleware.js";
 import multer from "multer";
 const router = express.Router();
@@ -16,5 +16,6 @@ const uploadMultiple = upload.fields([
 ]);
 
 router.post("/fileUpload", uploadMultiple, fileUpload);
+router.get("/viewData/:id", viewData);
 
 export default router;

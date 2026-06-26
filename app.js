@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import router from "./routes/routes.js";
 import { connect } from "./config/mongo.config.js";
+import cors from "cors";
 
 dotenv.config();
 

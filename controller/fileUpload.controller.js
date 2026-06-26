@@ -35,3 +35,23 @@ export const fileUpload = async (req, res) => {
     });
   }
 };
+
+export const viewData = async (req, res) => {
+  try {
+    console.log("i m here");
+    const id = req.params.id;
+    const result = await userData.findById(id);
+    if (!result) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    console.log(result);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Candidate Details</title>
+
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f4f4f4;
+        padding: 40px;
+      }
+
+      .card {
+        width: 500px;
+        margin: auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+
+      img {
+        width: 180px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 18px;
+      }
+
+      a {
+        text-decoration: none;
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <img id="photo" />
+
+      <h2 id="name"></h2>
+
+      <p>
+        <strong>Email :</strong>
+        <span id="email"></span>
+      </p>
+
+      <p>
+        <strong>Phone :</strong>
+        <span id="phone"></span>
+      </p>
+
+      <p>
+        <strong>Resume :</strong>
+        <a id="resume" target="_blank">View Resume</a>
+      </p>
+    </div>
+
+    <script>
+      async function getData() {
+        const response = await fetch(
+          "http://localhost:5500/api/viewData/6a3e88423e0da349d8d4eb96",
+        );
+
+        const data = await response.json();
+
+        console.log(data);
+
+        document.getElementById("name").innerText = data.name;
+        document.getElementById("email").innerText = data.email;
+        document.getElementById("phone").innerText = data.phoneNumber;
+
+        // Change 5001 to your backend port
+        document.getElementById("photo").src =
+          `../uploads/images/${data.imagefilename}`;
+
+        document.getElementById("resume").href =
+          `../uploads/pdf/${data.pdffilename}`;
+      }
+
+      getData();
+    </script>
+  </body>
+</html>
