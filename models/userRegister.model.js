@@ -13,12 +13,21 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  filename: {
+  imagefilename: {
     type: String,
     required: true,
     trim: true,
   },
-  url: {
+  pdffilename: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  imageurl: {
+    type: String,
+    required: true,
+  },
+  pdfurl: {
     type: String,
     required: true,
   },
@@ -26,4 +35,4 @@ const userSchema = new mongoose.Schema({
 
 const userData = mongoose.model("userData", userSchema);
 
-export default UserData;
+export default userData;
